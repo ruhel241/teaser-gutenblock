@@ -48,7 +48,7 @@ class NcfGears_Reference_Block_Init{
 		ob_start();
 		if( $query->have_posts() ): while( $query->have_posts() ): $query->the_post();
 			$this->loader->get_template_part('block','reference');
-		endwhile; endif;
+		wp_reset_postdata(); endwhile; endif; 
 		$output = ob_get_contents();
 		ob_end_clean();
 		return $output;
