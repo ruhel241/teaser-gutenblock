@@ -11,9 +11,9 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 This is a gutenburg block that uses an autocomplete (react-select) to query the WordPress REST API and search for posts.  This is still in development
 
 ## == Prerequisits
-Until gutenburg is released in core, the [gutenburg](https://wordpress.org/plugins/gutenberg/) plugin in needed
-Composer
-Node.js for development
+1. Until gutenburg is released in core, the [gutenburg](https://wordpress.org/plugins/gutenberg/) plugin in needed
+2. Composer
+3. Node.js for development
 
 ## == Installation ==
 1. Download or Clone the Repository
