@@ -31,7 +31,7 @@ registerBlockType( 'ncfgears/reference-block', {
 	// Block name. Block names must be string that contains a namespace prefix. Example: my-plugin/my-custom-block.
 	title: "News Reference Block", // Block title.
 	icon: 'list-view', // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
-	category: 'common', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
+	category: 'widgets', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
 	html: false,
 	keywords: [
 		__( 'ncfgears-reference-block — CGB Block' ),

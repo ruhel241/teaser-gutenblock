@@ -19,19 +19,17 @@ class Rest_functions{
             's'=> $params['q'], // the search query
             'post_status' => 'publish', // if you don't want drafts to be returned
             'ignore_sticky_posts' => 1,
-            'posts_per_page' => 10 // how much to show at once
+            'posts_per_page' => 10 // how much to show at once, the more characters you seach, the better
         ) );
-        if( $search_results->have_posts() ) :
-            while( $search_results->have_posts() ) : $search_results->the_post();	
+
+        if( $search_results->have_posts() ) : while( $search_results->have_posts() ) : $search_results->the_post();	
                 // shorten the title a little
                 $title = ( mb_strlen( $search_results->post->post_title ) > 50 ) ? mb_substr( $search_results->post->post_title, 0, 49 ) . '...' : $search_results->post->post_title;
                 $return[] = array( 
                                     "value"=>$search_results->post->ID,
                                     "label"=>$title
                                 );
-            endwhile;
-        endif;
-        //error_log(var_export($return));
+        wp_reset_postdata(); endwhile; endif;
         echo json_encode( $return );
         die;
     }

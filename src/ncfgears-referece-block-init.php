@@ -4,8 +4,6 @@
  *
  * Enqueue CSS/JS of all the blocks.
  *
- * @since 	1.0.0
- * @package CGB
  */
 
 // Exit if accessed directly.
@@ -26,7 +24,9 @@ class NcfGears_Reference_Block_Init{
 
 		$this->loader = new Reference_Block_Template_Loader();		
 	}
-
+	/**
+	 * Setting up the block with the block,js file and adjusting settings so it's a dynamic block
+	 */
 	function ncfgears_reference_block(){
 		// Scripts.
 		wp_register_script(
@@ -41,10 +41,14 @@ class NcfGears_Reference_Block_Init{
 		));
 	}
 
+	/**
+	 * Setting up the block with the block,js file and adjusting settings so it's a dynamic block
+	 * 
+	 * `attributes`: holds all the saved data from the block
+	 */
 	function ncfgears_render_reference_block( $attributes ) {
 		$post_id = $attributes['post_id'];
 		$query = new WP_Query( array( 'p' => $post_id, 'post_type' => 'any' ) );
-		
 		ob_start();
 		if( $query->have_posts() ): while( $query->have_posts() ): $query->the_post();
 			$this->loader->get_template_part('block','reference');

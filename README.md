@@ -20,9 +20,14 @@ This is a gutenburg block that uses an autocomplete (react-select) to query the 
 2. Remove .master from the foldr name
 3. Put the folder in /wp-content/plugins
 4. You will need to run 'composer install' to get the template loader
-5. Turn it on
+5. Enable the plugin in the wp-admin plugins
 
 ## == Developing == 
-1. Coming soon
+This project was bootstrapped with thee excelent [Create Guten Block](https://github.com/ahmadawais/create-guten-block) by Ahmad Awais.  Look there for working with his commands.  You will need Node.js and NPM to build from source.  I suggest running `npm install` in the plugin directory to get all of the packages needed to build this project.
 
-This project was bootstrapped with [Create Guten Block](https://github.com/ahmadawais/create-guten-block).
+## == Templates == 
+The templates folder holds a template for the reference block.  The aim of this plugin is not to just include the link, but allow you to theme the link into a tout.  Go edit the template and make it work
+
+ ## == Future plans == 
+ 1. Ability to change the template in gutenburg
+ 2. Direct preview in gutenburg, while showing an edit button, while editing show a preview button
