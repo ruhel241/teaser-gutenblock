@@ -43,7 +43,7 @@ class Rest_functions{
     }
 
     function get_block_html(  WP_REST_Request $request ){
-        error_log( 'ping' );
+        //error_log( 'ping' );
         $params = $request->get_params();
         $html = NcfGears_Reference_Block_Init::ncfgears_render_reference_block( $params['post_id']);
         $output = array( "html" => $html );

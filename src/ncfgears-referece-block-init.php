@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class NcfGears_Reference_Block_Init{
-	public $loader;
+	private $loader;
 	function __construct(){
 		add_action( 'init', array($this, 'ncfgears_reference_block' ) );
 
