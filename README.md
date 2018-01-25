@@ -30,4 +30,3 @@ The templates folder holds a template for the reference block.  The aim of this 
 
  ## == Future plans == 
  1. Ability to change the template in gutenburg
- 2. My hopes are that we get an easy way to add to the sidebar so that these settings can all be there and the settings are displayed in the sidebar

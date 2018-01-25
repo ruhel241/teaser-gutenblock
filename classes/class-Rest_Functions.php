@@ -1,13 +1,21 @@
 <?php
 class Rest_functions{
+    public $loader;
+
     function __construct(){
         add_action('rest_api_init', array($this,'rest_api_init'));
+        $this->loader = new Reference_Block_Template_Loader();	
     }
 
     function rest_api_init(){
-        register_rest_route('gutenburg/v1','/search_query/(?P<q>[\w-]+)',array(
+        register_rest_route('gutenburg/v1','/search-query/(?P<q>[\w-]+)',array(
 			'methods'         => WP_REST_Server::READABLE,
 			'callback'	=> array( $this, 'search_for_post' ),
+        ));
+        
+        register_rest_route('gutenburg/v1','/get-block/(?P<post_id>[\w-]+)',array(
+			'methods'         => WP_REST_Server::READABLE,
+			'callback'	=> array( $this, 'get_block_html' ),
 		));
     }
 
@@ -32,5 +40,14 @@ class Rest_functions{
         wp_reset_postdata(); endwhile; endif;
         echo json_encode( $return );
         die;
+    }
+
+    function get_block_html(  WP_REST_Request $request ){
+        error_log( 'ping' );
+        $params = $request->get_params();
+        $html = NcfGears_Reference_Block_Init::ncfgears_render_reference_block( $params['post_id']);
+        $output = array( "html" => $html );
+        return  $output;
+        die();
     }
 }

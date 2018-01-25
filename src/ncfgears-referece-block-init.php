@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class NcfGears_Reference_Block_Init{
-	private $loader;
+	public $loader;
 	function __construct(){
 		add_action( 'init', array($this, 'ncfgears_reference_block' ) );
 
@@ -37,7 +37,7 @@ class NcfGears_Reference_Block_Init{
 
 		register_block_type( 'ncfgears/reference-block', array(
 			'editor_script' => 'ncfgears_reference_block-block-js',
-			'render_callback' => array($this, 'ncfgears_render_reference_block'),
+			'render_callback' => array($this, 'rended_block_callback'),
 		));
 	}
 
@@ -46,8 +46,13 @@ class NcfGears_Reference_Block_Init{
 	 * 
 	 * `attributes`: holds all the saved data from the block
 	 */
-	function ncfgears_render_reference_block( $attributes ) {
+	function rended_block_callback( $attributes ){
 		$post_id = $attributes['post_id'];
+		return $this->ncfgears_render_reference_block( $post_id );
+	}
+
+	function ncfgears_render_reference_block( $post_id ) {
+		//error_log( 'getting block for post ' . $post_id );
 		$query = new WP_Query( array( 'p' => $post_id, 'post_type' => 'any' ) );
 		ob_start();
 		if( $query->have_posts() ): while( $query->have_posts() ): $query->the_post();
