@@ -18,3 +18,9 @@
   margin: 0 auto;
   max-width: 740px;
   padding: 2rem; }
+
+.components-panel {
+  overflow: visible !important; }
+
+.Select-menu-outer {
+  z-index: 10000000 !important; }

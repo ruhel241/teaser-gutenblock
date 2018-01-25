@@ -27,7 +27,7 @@ class Rest_functions{
             's'=> $params['q'], // the search query
             'post_status' => 'publish', // if you don't want drafts to be returned
             'ignore_sticky_posts' => 1,
-            'posts_per_page' => 10 // how much to show at once, the more characters you seach, the better
+            'posts_per_page' => 2 // how much to show at once, the more characters you seach, the better
         ) );
 
         if( $search_results->have_posts() ) : while( $search_results->have_posts() ) : $search_results->the_post();	
