@@ -1,10 +1,10 @@
 <?php
 /**
- * Plugin Name: ncfgears-reference-block — CGB Gutenberg Block Plugin
+ * Plugin Name: ncfgears-reference-block
  * Plugin URI: https://github.com/ahmadawais/create-guten-block/
- * Description: ncfgears-reference-block — is a Gutenberg plugin created via create-guten-block.
- * Author: mrahmadawais, maedahbatool
- * Author URI: https://AhmadAwais.com/
+ * Description: References a post or CPT in the same install and applies a template.  
+ * Author: adrock42
+ * Author URI: https://hadamlenz.wordpress.com/
  * Version: 1.0.0
  * License: GPL2+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
