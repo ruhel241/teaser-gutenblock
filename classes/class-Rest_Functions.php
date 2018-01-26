@@ -9,20 +9,36 @@ class Rest_functions{
 
     function rest_api_init(){
         register_rest_route('gutenburg/v1','/search-query/(?P<q>[a-zA-Z0-9-]+)',array(
-			'methods'         => WP_REST_Server::READABLE,
+            //'methods'         => WP_REST_Server::CREATABLE,
+            'methods'         => WP_REST_Server::READABLE,
 			'callback'	=> array( $this, 'search_for_post' ),
         ));
         
         register_rest_route('gutenburg/v1','/get-block/(?P<post_id>[\w\d-]+)',array(
-			'methods'         => WP_REST_Server::READABLE,
+            //'methods'         => WP_REST_Server::READABLE,
+            'methods'         => WP_REST_Server::CREATABLE,
 			'callback'	=> array( $this, 'get_block_html' ),
 		));
     }
 
     function search_for_post( WP_REST_Request $request){
         $params = $request->get_params();
+        $nullArray = ["value"=>"","label"=>""];
+        //security check
+        if( $request->get_header( 'X-WP-Nonce' ) ){
+            if( !wp_verify_nonce( $request->get_header( 'X-WP-Nonce' ), 'wp_rest' ) ){
+                $return = array($nullArray);
+                echo json_encode( $return );
+                die();
+            }
+        } else {
+            $return = array($nullArray);
+            echo json_encode( $return );
+            die();
+        }
+       
         $q = sanitize_text_field( $params['q'] );
-        $return = array();
+       
         // you can use WP_Query, query_posts() or get_posts() here - it doesn't matter
         $search_results = new WP_Query( array( 
             's'=> $q, // the search query
@@ -46,8 +62,17 @@ class Rest_functions{
 
     function get_block_html(  WP_REST_Request $request ){
         //error_log( 'ping' );
+        if( $request->get_header( 'X-WP-Nonce' ) ){
+            if( !wp_verify_nonce( $request->get_header( 'X-WP-Nonce' ), 'wp_rest' ) ){
+                return null;
+                die();
+            }
+        } else {
+            return null;
+            die();
+        }
         $params = $request->get_params();
-        $html = NcfGears_Reference_Block_Init::ncfgears_render_reference_block( $params['post_id']);
+        $html = NcfGears_Reference_Block_Init::ncfgears_render_reference_block( $params['post_id'], $params );
         $output = array( "html" => $html );
         return  $output;
         die();

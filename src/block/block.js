@@ -83,21 +83,47 @@ registerBlockType( 'ncfgears/reference-block', {
 			}
 		}
 
+		function handleFetchErrors(response) {
+			if (!response.ok) {
+				console.log('fetch error, status: ' + response.statusText);
+			}
+			return response;
+		}
+
 		const getPostDisplay = ( post_id ) =>{
 			var url = '/wp-json/gutenburg/v1/get-block/' + post_id;
-			fetch( url )
-			.then((response) => response.json())
-			.then((json) => {
-				setAttributes({
-					output: json.html,
-					getPost: false
+			
+			var vars = JSON.stringify( attributes );
+			return fetch( url, { 
+				credentials: 'same-origin',
+				method: 'post', 
+				headers: {
+					Accept: 'application/json',
+					'Content-Type': 'application/json',
+					'X-WP-Nonce': ngfb.nonce
+				},
+				body: vars,
+				})
+				.then( handleFetchErrors )
+				.then( ( response ) => response.json() )
+				.then( ( json ) => {
+					setAttributes({
+						output: json.html,
+						getPost: false
+					});
+				}).catch(function() {
+					console.log("error");
 				});
-			});
 		}
 
 		var value = { value: post_id, label: post_title }
 		const selecta = (
-			<Select2 onChange={ onSelectData } restUrl="/wp-json/gutenburg/v1/search-query/" initial_value={ value } />
+			<Select2 
+				onChange={ onSelectData } 
+				restUrl="/wp-json/gutenburg/v1/search-query/" 
+				initial_value={ value } 
+				nonce={ ngfb.nonce } 
+			/>
 		)
 
 		const controls = focus && (

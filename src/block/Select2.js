@@ -30,10 +30,14 @@ const Select2 = createClass({
 			return Promise.resolve({ options: [] });
 		}
 		var sanatizedInput = this.sanatizeInput( input );
-		
-		
 		var url = this.props.restUrl + sanatizedInput;
-		return fetch(url)
+
+		return fetch( url, { 
+			credentials: 'same-origin',
+			method: 'get', 
+			headers: {
+				'X-WP-Nonce': this.props.nonce
+			}})
 			.then( this.handleFetchErrors )
 			.then( ( response ) => response.json() )
 			.then( ( json ) => {
@@ -44,7 +48,7 @@ const Select2 = createClass({
 	},
 	handleFetchErrors(response) {
 		if (!response.ok) {
-			console.log('fetch error, status:' + response.statusText);
+			console.log('fetch error, status: ' + response.statusText);
 		}
 		return response;
 	},

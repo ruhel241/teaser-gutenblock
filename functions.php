@@ -82,7 +82,7 @@ if( !function_exists ( "reference_block_get_post_image_url" ) ){
         if( shortcode_exists('layerslider') ) {
             //check layerslider for the first image
             $content_layerslider_matches = preg_match_all('/\[layerslider\sid\=\"([1-9]+)\"\]/', $post->post_content, $ls_matches);
-            if( $content_layerslider_matches ){
+            if( $content_layerslider_matches && class_exists( 'LS_Shortcode' ) ){
                 $ls_id = $ls_matches[1];
                 $item = LS_Shortcode::validateShortcode( array( "id" => $ls_id ) );
                 $image_url = $item['data'][0]['data']['layers'][0]['properties']['backgroundThumb'];

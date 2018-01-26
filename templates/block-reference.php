@@ -1,4 +1,5 @@
 <?php if( !is_admin() ): ?>
+<?php error_log( var_export( $blockVars, true ) ); ?>
 <div class="wp-block-ncfgears-reference-block">
 <?php endif; ?>
     <img src="<?php echo reference_block_get_post_image_url( get_the_ID() ) ?>">

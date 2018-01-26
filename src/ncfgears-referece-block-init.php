@@ -35,6 +35,12 @@ class NcfGears_Reference_Block_Init{
 			array( 'wp-blocks', 'wp-i18n', 'wp-element' ) 
 		);
 
+		$javascript_vars = array(
+			"nonce" => wp_create_nonce( 'wp_rest' )
+		);
+		
+		wp_localize_script( "ncfgears_reference_block-block-js", 'ngfb' , $javascript_vars );
+
 		register_block_type( 'ncfgears/reference-block', array(
 			'editor_script' => 'ncfgears_reference_block-block-js',
 			'render_callback' => array($this, 'rended_block_callback'),
@@ -48,15 +54,17 @@ class NcfGears_Reference_Block_Init{
 	 */
 	function rended_block_callback( $attributes ){
 		$post_id = $attributes['post_id'];
-		return $this->ncfgears_render_reference_block( $post_id );
+		return $this->ncfgears_render_reference_block( $post_id, $attributes );
 	}
 
-	function ncfgears_render_reference_block( $post_id ) {
+	function ncfgears_render_reference_block( $post_id, $extra_vars = array() ) {
 		//error_log( 'getting block for post ' . $post_id );
 		$query = new WP_Query( array( 'p' => $post_id, 'post_type' => 'any' ) );
 		ob_start();
 		if( $query->have_posts() ): while( $query->have_posts() ): $query->the_post();
-			$this->loader->get_template_part('block','reference');
+			$this->loader
+				->set_template_data( $extra_vars, 'blockVars' )
+				->get_template_part('block','reference');
 		wp_reset_postdata(); endwhile; endif; 
 		$output = ob_get_contents();
 		ob_end_clean();
