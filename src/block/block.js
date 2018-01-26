@@ -36,8 +36,7 @@ registerBlockType( 'ncfgears/reference-block', {
 	// Block name. Block names must be string that contains a namespace prefix. Example: my-plugin/my-custom-block.
 	title: "News Reference Block", // Block title.
 	icon: 'list-view', // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
-	category: 'widgets', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
-	html: false,
+	category: 'common', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
 	keywords: [
 		__( 'ncfgears-reference-block — CGB Block' ),
 		__( 'create-guten-block' ),
@@ -90,7 +89,7 @@ registerBlockType( 'ncfgears/reference-block', {
 			.then((response) => response.json())
 			.then((json) => {
 				setAttributes({
-					output: <div dangerouslySetInnerHTML={{__html:json.html}} />,
+					output: json.html,
 					getPost: false
 				});
 			});
@@ -120,18 +119,18 @@ registerBlockType( 'ncfgears/reference-block', {
 				getPostDisplay( post_id );
 			}
 		}
-
+		
 		return [
 			controls,
-			<div className={ className }>
-				{ output }
-			</div>
-			
+			<div className={ className } dangerouslySetInnerHTML={ { __html: output } } />
 		];
 	},
 
 	// The "save" property must be specified and must be a valid function.
 	save( { attributes, className } ) {
-		return null;
+		const { getPost, hasPost, output, post_id, post_title, some_bool } = attributes;
+		return [
+			<div className={ className } dangerouslySetInnerHTML={ { __html: output } } />
+		]
 	},
 });

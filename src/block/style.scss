@@ -6,9 +6,21 @@
 
 .wp-block-ncfgears-reference-block {
   background: $white;
-  border: 0.2rem solid $black;
   color: $black;
   margin: 0 auto;
-  max-width: 740px;
-  padding: 2rem;
+  padding: 0.5rem;
+  white-space: nowrap;
+}
+
+.wp-block-ncfgears-reference-block img,
+.wp-block-ncfgears-reference-block .words{
+  display: inline-block;
+  width: 50%;
+  vertical-align: top;
+  white-space: normal;
+}
+
+.wp-block-ncfgears-reference-block h2{
+  margin: 0;
+  line-height: 1.1em;
 }

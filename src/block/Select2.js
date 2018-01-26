@@ -29,12 +29,35 @@ const Select2 = createClass({
 		if (!input) {
 			return Promise.resolve({ options: [] });
 		}
-		var url = this.props.restUrl + input;
+		var sanatizedInput = this.sanatizeInput( input );
+		
+		
+		var url = this.props.restUrl + sanatizedInput;
 		return fetch(url)
-		.then((response) => response.json())
-		.then((json) => {
-			return { options: json };
-		});
+			.then( this.handleFetchErrors )
+			.then( ( response ) => response.json() )
+			.then( ( json ) => {
+				return { options: json };
+			}).catch(function() {
+				console.log("error");
+			});
+	},
+	handleFetchErrors(response) {
+		if (!response.ok) {
+			console.log('fetch error, status:' + response.statusText);
+		}
+		return response;
+	},
+	sanatizeInput( input ){
+		var output = input
+			.replace(/[^\w\s\d]/gi, '')
+			.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '')
+			.split(' ')
+			.join('-');
+		if( output == "" ){
+			output = "null";
+		}
+		return output;
 	},
 	toggleBackspaceRemoves () {
 		this.setState({

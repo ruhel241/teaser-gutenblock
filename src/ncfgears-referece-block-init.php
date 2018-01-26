@@ -17,10 +17,10 @@ class NcfGears_Reference_Block_Init{
 		add_action( 'init', array($this, 'ncfgears_reference_block' ) );
 
 		// Hook: Frontend assets.
-		add_action( 'enqueue_block_assets', array($this, 'ncfgears_reference_block_cgb_block_assets' ) );
+		add_action( 'enqueue_block_assets', array($this, 'ncfgears_reference_block_block_assets' ) );
 
 		// Hook: Editor assets.
-		add_action( 'enqueue_block_editor_assets', array($this, 'ncfgears_reference_block_cgb_editor_assets' ) );
+		add_action( 'enqueue_block_editor_assets', array($this, 'ncfgears_reference_block_editor_assets' ) );
 
 		$this->loader = new Reference_Block_Template_Loader();		
 	}
@@ -69,7 +69,7 @@ class NcfGears_Reference_Block_Init{
 	 *
 	 * @since 1.0.0
 	 */
-	function ncfgears_reference_block_cgb_block_assets() {
+	function ncfgears_reference_block_block_assets() {
 		// Styles.
 		wp_enqueue_style(
 			'ncfgears_reference_block-style-css', // Handle.
@@ -88,7 +88,7 @@ class NcfGears_Reference_Block_Init{
 	 *
 	 * @since 1.0.0
 	 */
-	function ncfgears_reference_block_cgb_editor_assets() {
+	function ncfgears_reference_block_editor_assets() {
 		// Styles.
 		wp_enqueue_style(
 			'ncfgears_reference_block-cgb-block-editor-css', // Handle.

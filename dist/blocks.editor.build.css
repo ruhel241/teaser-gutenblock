@@ -13,11 +13,9 @@
 @import url(../node_modules/react-select/dist/react-select.css);
 .wp-block-ncfgears-reference-block {
   background: #f4f4f4;
-  border: 0.2rem solid #292929;
   color: #292929;
   margin: 0 auto;
-  max-width: 740px;
-  padding: 2rem; }
+  padding: 0.5rem; }
 
 .components-panel {
   overflow: visible !important; }

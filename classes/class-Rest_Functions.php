@@ -8,12 +8,12 @@ class Rest_functions{
     }
 
     function rest_api_init(){
-        register_rest_route('gutenburg/v1','/search-query/(?P<q>[\w-]+)',array(
+        register_rest_route('gutenburg/v1','/search-query/(?P<q>[a-zA-Z0-9-]+)',array(
 			'methods'         => WP_REST_Server::READABLE,
 			'callback'	=> array( $this, 'search_for_post' ),
         ));
         
-        register_rest_route('gutenburg/v1','/get-block/(?P<post_id>[\w-]+)',array(
+        register_rest_route('gutenburg/v1','/get-block/(?P<post_id>[\w\d-]+)',array(
 			'methods'         => WP_REST_Server::READABLE,
 			'callback'	=> array( $this, 'get_block_html' ),
 		));
@@ -21,18 +21,20 @@ class Rest_functions{
 
     function search_for_post( WP_REST_Request $request){
         $params = $request->get_params();
+        $q = sanitize_text_field( $params['q'] );
         $return = array();
         // you can use WP_Query, query_posts() or get_posts() here - it doesn't matter
         $search_results = new WP_Query( array( 
-            's'=> $params['q'], // the search query
+            's'=> $q, // the search query
             'post_status' => 'publish', // if you don't want drafts to be returned
             'ignore_sticky_posts' => 1,
-            'posts_per_page' => 2 // how much to show at once, the more characters you seach, the better
+            'posts_per_page' => 5 // how much to show at once, the more characters you seach, the better
         ) );
 
         if( $search_results->have_posts() ) : while( $search_results->have_posts() ) : $search_results->the_post();	
                 // shorten the title a little
-                $title = ( mb_strlen( $search_results->post->post_title ) > 50 ) ? mb_substr( $search_results->post->post_title, 0, 49 ) . '...' : $search_results->post->post_title;
+                //$title = ( mb_strlen( $search_results->post->post_title ) > 50 ) ? mb_substr( $search_results->post->post_title, 0, 49 ) . '...' : $search_results->post->post_title;
+                $title = reference_block_truncate( $search_results->post->post_title, 50 );//truncate to 50 char
                 $return[] = array( 
                                     "value"=>$search_results->post->ID,
                                     "label"=>$title
