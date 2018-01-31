@@ -16,10 +16,12 @@ const { __ } = wp.i18n; // Import __() from wp.i18n
 const { 
 	InspectorControls,
 	registerBlockType,
-	blockEditRender 
+	blockEditRender,
+	Spinner
 	} = wp.blocks; // Import registerBlockType() from wp.blocks
 
-const { ToggleControl } = InspectorControls;
+//this is where block control componants go! a-ha!
+const { ToggleControl, SelectControl } = InspectorControls;
 /**
  * Register: aa Gutenberg Block.
  *
@@ -32,13 +34,14 @@ const { ToggleControl } = InspectorControls;
  * @return {?WPBlock}          The block, if it has been successfully
  *                             registered; otherwise `undefined`.
  */
-registerBlockType( 'ncfgears/reference-block', {
+registerBlockType( 'teaser/reference-block', {
 	// Block name. Block names must be string that contains a namespace prefix. Example: my-plugin/my-custom-block.
-	title: "News Reference Block", // Block title.
+	title: "Teaser", // Block title.
 	icon: 'list-view', // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
 	category: 'common', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
 	keywords: [
-		__( 'ncfgears-reference-block — CGB Block' ),
+		__( 'teaser block' ),
+		__( 'teaser' ),
 		__( 'create-guten-block' ),
 	],
 	attributes: {
@@ -60,11 +63,18 @@ registerBlockType( 'ncfgears/reference-block', {
 		post_title: {
 			type: 'string',
 		},
+		template: {
+			type: 'string',
+			default: 'block-'+ngfb.template_prefix
+		},
+		templates: {
+			type: 'array',
+		}
 	},
 
 	// The "edit" property must be a valid function.
 	edit( { attributes, setAttributes, focus, setFocus, className } ) {
-		const { getPost, hasPost, output, post_id, post_title, some_bool } = attributes;
+		const { getPost, hasPost, output, post_id, post_title, template, templates } = attributes;
 		function onSelectData( option ){
 			if( option === null ){
 				setAttributes({
@@ -74,26 +84,40 @@ registerBlockType( 'ncfgears/reference-block', {
 					getPost: false,
 				});
 			} else {
-				setAttributes({
-					post_id: option.value,
-					post_title: option.label,
-					hasPost: true,
-					getPost: true,
+				getTemplates().then( function( options ){
+					setAttributes({
+						post_id: option.value,
+						post_title: option.label,
+						hasPost: true,
+						getPost: true,
+						templates: options
+					});
+				}).then(function() {
+					getPostDisplay( option.value, template ).then( function( display ){
+						setAttributes({
+							output: display,
+							getPost: false,
+						});
+					});
 				});
 			}
 		}
 
-		function handleFetchErrors(response) {
-			if (!response.ok) {
-				console.log('fetch error, status: ' + response.statusText);
-			}
-			return response;
+		function onSelectTemplate( option ){
+			getPostDisplay( post_id, option ).then( function( display ){
+				setAttributes({
+					template: option,
+					output: display,
+					getPost: false,
+				});
+			});			
 		}
 
-		const getPostDisplay = ( post_id ) =>{
-			var url = '/wp-json/gutenburg/v1/get-block/' + post_id;
-			
+		function getPostDisplay( post_id, this_template ){
+			var url = '/wp-json/reference-block/v1/get-block/' + post_id + '/temp/' + this_template;
+			//console.log(url);
 			var vars = JSON.stringify( attributes );
+
 			return fetch( url, { 
 				credentials: 'same-origin',
 				method: 'post', 
@@ -107,29 +131,71 @@ registerBlockType( 'ncfgears/reference-block', {
 				.then( handleFetchErrors )
 				.then( ( response ) => response.json() )
 				.then( ( json ) => {
-					setAttributes({
-						output: json.html,
-						getPost: false
-					});
-				}).catch(function() {
-					console.log("error");
+					var display = json.html;
+					return display;
+				}).catch(function(e) {
+					console.log(e);
 				});
 		}
 
-		var value = { value: post_id, label: post_title }
+		function getTemplates(){
+			var url = '/wp-json/reference-block/v1/get-block-templates/'+ ngfb.template_prefix;
+			return fetch( url, { 
+				credentials: 'same-origin',
+				method: 'get', 
+				headers: {
+					Accept: 'application/json',
+					'Content-Type': 'application/json',
+					'X-WP-Nonce': ngfb.nonce
+				}})
+				.then( handleFetchErrors )
+				.then( ( response ) => response.json() )
+				.then( ( json ) => {
+					var options = json.map( function(opt, i){
+						return {value: opt.basename, label: opt.template_name}
+					})
+					return options;
+				})
+				.catch(function(e) {
+					console.log(e);
+			});
+			
+		}
+		
+		function handleFetchErrors( response ) {
+			if (!response.ok) {
+				console.log('fetch error, status: ' + response.statusText);
+			}
+			return response;
+		}
+
+		var selectaValue = { value: post_id, label: post_title }
 		const selecta = (
 			<Select2 
 				onChange={ onSelectData } 
-				restUrl="/wp-json/gutenburg/v1/search-query/" 
-				initial_value={ value } 
+				restUrl="/wp-json/reference-block/v1/search-query/" 
+				initial_value={ selectaValue } 
 				nonce={ ngfb.nonce } 
+			/>
+		);
+
+		const templateSelectControl = (
+			<SelectControl
+				type= 'number'
+				label= 'Select Template'
+				onChange = { onSelectTemplate }
+				value = { template }
+				options ={ templates }
 			/>
 		)
 
 		const controls = focus && (
 			<InspectorControls key="inspector">
-				<label class="blocks-base-control__label">Search for a Post</label>
-				{ selecta }
+				<div class="blocks-base-control">
+					<label class="blocks-base-control_label">Search for a Post</label>
+					{ selecta }
+				</div>
+				{ templateSelectControl }
 			</InspectorControls>
 		);
 
@@ -142,17 +208,25 @@ registerBlockType( 'ncfgears/reference-block', {
 			]
 		} else {
 			if( getPost ){
-				getPostDisplay( post_id );
+				return [
+					controls,
+					<div className={ className } >
+						<div class="teaser-spinner"></div>
+					</div>
+				]
+			} else {
+				return [
+					controls,
+					<div className={ className } dangerouslySetInnerHTML={ { __html: output } } />
+				]
 			}
 		}
 		
-		return [
-			controls,
-			<div className={ className } dangerouslySetInnerHTML={ { __html: output } } />
-		];
+		
 	},
 
 	// The "save" property must be specified and must be a valid function.
+	//this is what puts the html in the "edit as html" box
 	save( { attributes, className } ) {
 		const { getPost, hasPost, output, post_id, post_title, some_bool } = attributes;
 		return [

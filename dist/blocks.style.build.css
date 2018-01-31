@@ -9,20 +9,20 @@
  *
  * CSS for both Frontend+Backend.
  */
-.wp-block-ncfgears-reference-block {
+.wp-block-teaser-reference-block {
   background: #f4f4f4;
   color: #292929;
   margin: 0 auto;
   padding: 0.5rem;
   white-space: nowrap; }
 
-.wp-block-ncfgears-reference-block img,
-.wp-block-ncfgears-reference-block .words {
+.wp-block-teaser-reference-block img,
+.wp-block-teaser-reference-block .words {
   display: inline-block;
   width: 50%;
   vertical-align: top;
   white-space: normal; }
 
-.wp-block-ncfgears-reference-block h2 {
+.wp-block-teaser-reference-block h2 {
   margin: 0;
   line-height: 1.1em; }

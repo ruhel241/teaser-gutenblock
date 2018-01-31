@@ -80,7 +80,13 @@ const Select2 = createClass({
 
 		return (
 			<div className="section">
-				<AsyncComponent multi={this.state.multi} value={this.state.value} onChange={this.onChange} loadOptions={this.getData} backspaceRemoves={this.state.backspaceRemoves} />
+				<AsyncComponent 
+					multi={this.state.multi} 
+					value={this.state.value} 
+					onChange={this.onChange} 
+					loadOptions={this.getData} 
+					backspaceRemoves={this.state.backspaceRemoves} 
+					/>
             </div>
 		);
 	}

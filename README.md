@@ -1,4 +1,4 @@
-# === Reference Gutenburg Block ===
+# === Teaser Gutenburg Block ===
 Contributors: (@adrock42, @hadamlenz)
 Tags: wordpress, gutenburg
 Requires at least: 4.9
@@ -8,25 +8,27 @@ License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 ## == Description ==
-This is a gutenburg block that uses an autocomplete ([react-select](https://github.com/JedWatson/react-select)) to query the WordPress REST API and search for posts.  This is still in development
+This is a gutenburg block that uses an autocomplete ([react-select](https://github.com/JedWatson/react-select)) to query the WordPress REST API and search for posts.  The post data is returned to a template file so that you can use in-the-loop template functions.  This is still in development and might change drasticly depending on the development of gutenberg. 
 
 ## == Prerequisits
 1. Until gutenburg is released in core, the [gutenburg](https://wordpress.org/plugins/gutenberg/) plugin in needed
-2. Composer
-3. Node.js for development
+2. Composer for installing the template loader
+3. Node.js and NPM for development
 
 ## == Installation ==
 1. Download or Clone the Repository
-2. Remove .master from the foldr name
+2. Remove _master from the folder name if it is there
 3. Put the folder in /wp-content/plugins
 4. You will need to run 'composer install' to get the template loader
 5. Enable the plugin in the wp-admin plugins
 
 ## == Developing == 
-This project was bootstrapped with thee excelent [Create Guten Block](https://github.com/ahmadawais/create-guten-block) by Ahmad Awais.  Look there for working with his commands.  You will need Node.js and NPM to build from source.  I suggest running `npm install` in the plugin directory to get all of the packages needed to build this project.  The files you will need to edit are in src.
+This project was bootstrapped with thee excelent [Create Guten Block](https://github.com/ahmadawais/create-guten-block) by Ahmad Awais.  Look there for working with his commands.  You will need Node.js and NPM to download the node_modules and run the building process.  I suggest running `npm install` in the plugin directory to get all of the packages needed to build this project.  The files you will need to edit are in src
 
 ## == Templates == 
-The templates folder holds a template for the reference block.  The aim of this plugin is not to just include the link, but allow you to theme the link into a tout.  Go edit the template and make it work.  All of the attributes from the block are available in an object named blockVars on the template.
+The aim of this plugin is not to just include a link to another post, but to allow you to theme the content from a post into any other form you wish, creating something a-kin to a newspaper [teaser](http://www.herald.co.zw/teasers-in-newspapers/). It uses Gamajo [Template Loader](https://github.com/GaryJones/Gamajo-Template-Loader) to add a default templates folder to the plugin.  If you wish to create more templates, you should create a folder called "reference-block-templates" in your theme.  Template files should be named block-reference-{description} and should include a header with a "Template Name:" property. 
+
+When creating templates, all of the attributes from the block are available in an object named blockVars on the template.
 
  ## == Future plans == 
- 1. Ability to change the template in gutenburg
+ 1. Accepting ideas and issues in the [issues section](https://github.com/hadamlenz/ncfgears-reference-block/issues)
