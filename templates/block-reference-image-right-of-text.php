@@ -8,7 +8,7 @@
 ?>
 
 <?php if( !is_admin() ): ?>
-<div class="wp-block-reference-block">
+<div class="wp-block-teaser-reference-block">
 <?php endif; ?>
 
     <div class="words">
