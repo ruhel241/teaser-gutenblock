@@ -16,10 +16,10 @@ This is a gutenburg block that uses an autocomplete ([react-select](https://gith
 3. Node.js and NPM for development
 
 ## == Installation ==
-1. Download or Clone the Repository
-2. Remove _master from the folder name if it is there
-3. Put the folder in /wp-content/plugins
-4. You will need to run 'composer install' to get the template loader
+1. `cd /wp-content/plugins` - change directory to your plugin folder
+2. `git clone https://github.com/hadamlenz/teaser-gutenblock` - grab the plugin
+3. `cd teaser-gutenblock` - change directory to the plugin folder
+4. `composer install` - install the template loader
 5. Enable the plugin in the wp-admin plugins
 
 ## == Developing == 
