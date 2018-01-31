@@ -1,7 +1,7 @@
 <?php
 /***** utility functions for templates */
 if( !function_exists ( "reference_block_get_the_excerpt" ) ){
-    function reference_block_get_the_excerpt( $post ){
+    function reference_block_get_the_excerpt( $post, $limit = 55 ){
         $post = get_post( $post );
         if ( ! $post ) {
             return '';
@@ -11,12 +11,12 @@ if( !function_exists ( "reference_block_get_the_excerpt" ) ){
         if( get_field( 'excerpt_excerpt', $post->ID ) ){
             $excerpt = get_field( 'excerpt_excerpt', $post->ID );
         } elseif( "" === $post->post_excerpt ){
-            $excerpt = wp_trim_words($post->post_content, 55, '...');
+            $excerpt = wp_trim_words($post->post_content, $limit, '...');
         } else {
             $excerpt = $post->post_excerpt;
         }
 
-        return $excerpt;
+        return apply_filters('the_content', $excerpt );
         //return 'fubar';
     }
 }
