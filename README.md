@@ -31,4 +31,4 @@ The aim of this plugin is not to just include a link to another post, but to all
 When creating templates, all of the attributes from the block are available in an object named blockVars on the template.
 
  ## == Future plans == 
- 1. Accepting ideas and issues in the [issues section](https://github.com/hadamlenz/ncfgears-reference-block/issues)
+ 1. Accepting ideas and issues in the [issues section](https://github.com/hadamlenz/teaser-gutenblock/issues)

@@ -2,7 +2,7 @@
 class Reference_Block_Template_Loader extends Gamajo_Template_Loader {
 	protected $filter_prefix = 'reference-block';
 	protected $theme_template_directory = 'reference-block-templates';
-	protected $plugin_directory = NCFGEARS_REFERENCE_BLOCK_DIR;
+	protected $plugin_directory = REFERENCE_BLOCK_DIR;
 
 	public function get_templates( $slug ){
 		$paths = $this->get_template_paths();

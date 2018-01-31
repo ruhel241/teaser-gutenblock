@@ -87,7 +87,7 @@ class Reference_Block_Init{
 			array( 'wp-blocks' ) // Dependency to include the CSS after it.
 			// filemtime( plugin_dir_path( __FILE__ ) . 'editor.css' ) // Version: filemtime — Gets file modification time.
 		);
-	} // End function ncfgears_reference_block_cgb_block_assets().
+	} 
 
 	/**
 	 * Enqueue Gutenberg block assets for backend editor.
@@ -106,7 +106,7 @@ class Reference_Block_Init{
 			array( 'wp-edit-blocks' ) // Dependency to include the CSS after it.
 			// filemtime( plugin_dir_path( __FILE__ ) . 'editor.css' ) // Version: filemtime — Gets file modification time.
 		);
-	} // End function ncfgears_reference_block_cgb_editor_assets().
+	} 
 }
 
 new Reference_Block_Init();

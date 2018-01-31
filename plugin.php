@@ -1,7 +1,7 @@
 <?php
 /**
- * Plugin Name: ncfgears-reference-block
- * Plugin URI: https://github.com/ahmadawais/create-guten-block/
+ * Plugin Name: Teaser Gutenberg Block
+ * Plugin URI: https://github.com/hadamlenz/teaser-gutenblock
  * Description: References a post or CPT in the same install and applies a template.  
  * Author: adrock42
  * Author URI: https://hadamlenz.wordpress.com/
@@ -23,8 +23,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 require_once( plugin_dir_path(__FILE__) . '/functions.php' );
 
 require_once( plugin_dir_path( __FILE__ ) . 'vendor/autoload.php' );
-define('NCFGEARS_REFERENCE_BLOCK_URL', plugin_dir_url( __FILE__ ) );
-define('NCFGEARS_REFERENCE_BLOCK_DIR', plugin_dir_path( __FILE__ ) );
+define('REFERENCE_BLOCK_URL', plugin_dir_url( __FILE__ ) );
+define('REFERENCE_BLOCK_DIR', plugin_dir_path( __FILE__ ) );
 spl_autoload_register(function ($class) {
 	$file =  '/classes/class-' . $class . '.php';
 	if (file_exists(plugin_dir_path(__FILE__) . $file))
@@ -34,4 +34,4 @@ spl_autoload_register(function ($class) {
 new Rest_functions();
 
 //this comes last to reap the benifit of all above
-require_once( plugin_dir_path( __FILE__ ) . 'src/ncfgears-referece-block-init.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'src/referece-block-init.php' );
