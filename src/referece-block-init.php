@@ -43,10 +43,12 @@ class Reference_Block_Init{
 		
 		wp_localize_script( "reference_block-block-js", 'ngfb' , $javascript_vars );
 
-		register_block_type( 'teaser/reference-block', array(
-			'editor_script' => 'reference_block-block-js',
-			'render_callback' => array($this, 'rendered_block_callback'),
-		));
+		if( function_exists( 'register_block_type') ){
+			register_block_type( 'teaser/reference-block', array(
+				'editor_script' => 'reference_block-block-js',
+				'render_callback' => array($this, 'rendered_block_callback'),
+			));
+		}
 	}
 
 	/**
