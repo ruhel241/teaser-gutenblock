@@ -1,5 +1,5 @@
 <?php
-class Rest_functions{
+class Rest_Functions{
     public $loader;
 
     function __construct(){

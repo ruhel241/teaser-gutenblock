@@ -31,7 +31,7 @@ spl_autoload_register(function ($class) {
 		include_once(plugin_dir_path(__FILE__) . $file);
 });
 
-new Rest_functions();
+new Rest_Functions();
 
 //this comes last to reap the benifit of all above
 require_once( plugin_dir_path( __FILE__ ) . 'src/referece-block-init.php' );
