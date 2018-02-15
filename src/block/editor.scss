@@ -5,7 +5,8 @@
  * which makes it higher in priority.
  */
 
- @import '../node_modules/react-select/dist/react-select.css';
+ //@import '../node_modules/react-select/dist/react-select.css';
+ @import './node_modules/react-select/scss/default.scss';
 
 .wp-block-teaser-reference-block  {
   background: $white;
