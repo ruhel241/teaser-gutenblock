@@ -9,6 +9,8 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 ![block in the editor](https://github.com/hadamlenz/teaser-gutenblock/blob/master/images/teaser-in-editor.jpg?raw=true "Teaser in the Editor")
 
+![block controls](https://github.com/hadamlenz/teaser-gutenblock/blob/master/images/teaser-controls.jpg "Teaser controls")
+
 ## == Description ==
 This is a gutenburg block that uses an autocomplete ([react-select](https://github.com/JedWatson/react-select)) to query the WordPress REST API and search for posts.  The post data is returned to a template file so that you can use in-the-loop template functions.  This is still in development and might change drasticly depending on the development of gutenberg. 
 
