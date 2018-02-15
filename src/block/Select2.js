@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import Select from 'react-select';
 import fetch from 'isomorphic-fetch';
 
-
 const Select2 = createClass({
 	displayName: 'Select2',
 	propTypes: {

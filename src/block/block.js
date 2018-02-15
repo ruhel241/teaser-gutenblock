@@ -130,8 +130,10 @@ registerBlockType( 'teaser/reference-block', {
 				.then( handleFetchErrors )
 				.then( ( response ) => response.json() )
 				.then( ( json ) => {
-					var display = json.html;
-					return display;
+					if( json ){
+						var display = json.html;
+						return display;
+					}
 				}).catch(function(e) {
 					console.log(e);
 				});
@@ -220,8 +222,6 @@ registerBlockType( 'teaser/reference-block', {
 				]
 			}
 		}
-		
-		
 	},
 
 	// The "save" property must be specified and must be a valid function.

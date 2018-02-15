@@ -14,7 +14,7 @@ class Rest_Functions{
 			'callback'	=> array( $this, 'search_for_post' ),
         ));
         
-        register_rest_route('reference-block/v1','/get-block/(?P<post_id>[\w\d-]+)/temp/(?P<temp>[\w\d-]+)',array(
+        register_rest_route('reference-block/v1','/get-block/(?P<postid>[\w\d-]+)/temp/(?P<temp>[\w\d-]+)',array(
             'methods'         => WP_REST_Server::READABLE,
             //'methods'         => WP_REST_Server::CREATABLE,
             //'methods'           => WP_REST_Server::ALLMETHODS,
@@ -85,9 +85,8 @@ class Rest_Functions{
         //error_log('getting block');
         //$body_params = $request->get_body_params();
         $params = $request->get_params();
-        //error_log( var_export($params,true));
-        if( "" !== $params['post_id'] ){
-            $html = Reference_Block_Init::render_reference_block( $params['post_id'], $params, $params['temp'] );
+        if( "" !== $params['postid'] ){
+            $html = Reference_Block_Init::render_reference_block( $params['postid'], $params, $params['temp'] );
             $output = array( "html" => $html );
             return  $output;
             die();
