@@ -115,18 +115,17 @@ registerBlockType( 'teaser/reference-block', {
 
 		function getPostDisplay( post_id, this_template ){
 			var url = '/wp-json/reference-block/v1/get-block/' + post_id + '/temp/' + this_template;
-			//console.log(url);
-			var vars = JSON.stringify( attributes );
-
+			var vars = jQuery.param( attributes );
+			url = url+'?'+vars;
 			return fetch( url, { 
 				credentials: 'same-origin',
-				method: 'post', 
+				method: 'get', 
 				headers: {
 					Accept: 'application/json',
 					'Content-Type': 'application/json',
 					'X-WP-Nonce': ngfb.nonce
 				},
-				body: vars,
+				
 				})
 				.then( handleFetchErrors )
 				.then( ( response ) => response.json() )
