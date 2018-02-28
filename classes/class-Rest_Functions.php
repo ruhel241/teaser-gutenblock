@@ -10,7 +10,8 @@ class Rest_Functions{
     function rest_api_init(){
         register_rest_route('reference-block/v1','/search-query/(?P<q>[a-zA-Z0-9-]+)',array(
             //'methods'         => WP_REST_Server::CREATABLE,
-            'methods'         => WP_REST_Server::READABLE,
+            //'methods'         => WP_REST_Server::READABLE,
+            'methods'         => WP_REST_Server::ALLMETHODS,
 			'callback'	=> array( $this, 'search_for_post' ),
         ));
         

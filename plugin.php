@@ -21,7 +21,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Block Initializer.
  */
 require_once( plugin_dir_path(__FILE__) . '/functions.php' );
-
 require_once( plugin_dir_path( __FILE__ ) . 'vendor/autoload.php' );
 define('REFERENCE_BLOCK_URL', plugin_dir_url( __FILE__ ) );
 define('REFERENCE_BLOCK_DIR', plugin_dir_path( __FILE__ ) );
@@ -30,8 +29,6 @@ spl_autoload_register(function ($class) {
 	if (file_exists(plugin_dir_path(__FILE__) . $file))
 		include_once(plugin_dir_path(__FILE__) . $file);
 });
-
 new Rest_Functions();
-
 //this comes last to reap the benifit of all above
 require_once( plugin_dir_path( __FILE__ ) . 'src/referece-block-init.php' );

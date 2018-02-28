@@ -8,8 +8,9 @@ if( !function_exists ( "reference_block_get_the_excerpt" ) ){
         }
         $excerpt = '';
 
-        if( get_field( 'excerpt_excerpt', $post->ID ) ){
+        if( function_exists( 'get_field' ) && get_field( 'excerpt_excerpt', $post->ID ) ){
             $excerpt = get_field( 'excerpt_excerpt', $post->ID );
+           
         } elseif( "" === $post->post_excerpt ){
             $excerpt = wp_trim_words($post->post_content, $limit, '...');
         } else {
@@ -33,7 +34,7 @@ if( !function_exists ( "reference_block_get_post_image_url" ) ){
             return '';
             error_log('ded'); 
         }
-
+        error_log($post->ID);
         //check for a post thumbnail
         $post_thumbnail_id= get_post_thumbnail_id( $post->ID );
         $url = '';
@@ -46,22 +47,25 @@ if( !function_exists ( "reference_block_get_post_image_url" ) ){
         }
 
         //check for featured image url
-        $image_url = get_field( 'image_url', $post->ID );
-        if( $image_url && "" !== $image_url ) {
-            //error_log( $image_url );
-            return $image_url;
+        if( function_exists( 'get_field' ) ){
+            $image_url = get_field( 'image_url', $post->ID );
+            if( $image_url && "" !== $image_url ) {
+                //error_log( $image_url );
+                return $image_url;
+            }
+            
+            $source = get_field( 'excerpt_image_source', $post->ID );
+            switch( $source ){
+                case 'smugmug':
+                    $image_url = get_field( 'excerpt_smugmug_url', $post->ID );
+                    if( $image_url &&  "" !== $image_url ) {
+                        //error_log( $image_url );
+                        return $image_url;
+                    }  
+                break;
+            }
         }
         
-        $source = get_field( 'excerpt_image_source', $post->ID );
-        switch( $source ){
-            case 'smugmug':
-                $image_url = get_field( 'excerpt_smugmug_url', $post->ID );
-                if( $image_url &&  "" !== $image_url ) {
-                    //error_log( $image_url );
-                    return $image_url;
-                }  
-            break;
-        }
         
 
         $image_url = get_post_meta( $post->ID, '_video_thumbnail',true);
