@@ -226,10 +226,7 @@ registerBlockType( 'teaser/reference-block', {
 
 	// The "save" property must be specified and must be a valid function.
 	//this is what puts the html in the "edit as html" box
-	save( { attributes, className } ) {
-		const { getPost, hasPost, output, post_id, post_title, some_bool } = attributes;
-		return [
-			<div className={ className } dangerouslySetInnerHTML={ { __html: output } } />
-		]
+	save() {
+		return null;
 	},
 });
