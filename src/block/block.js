@@ -21,7 +21,7 @@ const {
 	} = wp.blocks; // Import registerBlockType() from wp.blocks
 
 //this is where block control componants go! a-ha!
-const { ToggleControl, SelectControl } = InspectorControls;
+const { ToggleControl, SelectControl } = wp.components;
 /**
  * Register: aa Gutenberg Block.
  *
